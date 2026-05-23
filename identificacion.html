@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>DNI Digital - Mi Argentina</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { background-color: #f8f9fa; margin: 0; padding-bottom: 80px; }
+        
+        .header-dni-digital {
+            background-color: var(--brand-blue);
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-dni-digital h2 { font-size: 1.1rem; font-weight: 500; margin: 0; flex-grow: 1; margin-left: 20px; }
+        .header-dni-digital a { color: white; text-decoration: none; font-size: 1.2rem; }
+
+        .dni-container { padding: 20px; }
+
+        /* Tarjeta Blanca Principal */
+        .dni-card-main {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dni-card-content { padding: 20px; text-align: center; }
+
+        .user-full-name {
+            text-align: left;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Swiper / Imagen DNI */
+        .swiper-dni { width: 100%; margin-bottom: 15px; }
+        .swiper-dni img {
+            width: 100%;
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        .update-info {
+            color: #666;
+            font-size: 0.85rem;
+            margin-top: 10px;
+        }
+
+        /* Botonera de la tarjeta */
+        .dni-card-actions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            border-top: 1px solid #eee;
+        }
+
+        .btn-card {
+            padding: 15px;
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .btn-card:first-child { border-right: 1px solid #eee; }
+        .btn-card i { font-size: 1.2rem; color: var(--brand-blue); }
+        .btn-card i.fa-xmark { color: #555; }
+
+        /* Paginación Swiper Personalizada */
+        .swiper-pagination-bullet-active { background: var(--brand-blue) !important; }
+    </style>
+</head>
+<body>
+
+    <header class="header-dni-digital">
+        <a href="documentos.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2>DNI Digital</h2>
+        <i class="fa-solid fa-rotate-right" onclick="location.reload()"></i>
+    </header>
+
+    <main class="dni-container">
+        <div class="dni-card-main">
+            <div class="dni-card-content">
+                <h3 class="user-full-name">Matias Ezequiel Rios</h3>
+                
+                <div class="swiper swiper-dni">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide">
+                            <img src="DNI_frente.png" alt="DNI Frente">
+                        </div>
+                        <div class="swiper-slide">
+                            <img src="DNI_dorso.png" alt="DNI Dorso">
+                        </div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+
+                <p class="update-info">Última actualización <span class="current-date"></span></p>
+            </div>
+
+            <div class="dni-card-actions">
+                <button class="btn-card" onclick="toggleDniDetail()">
+                    <i class="fa-solid fa-eye"></i> Ver detalle
+                </button>
+                <button class="btn-card" onclick="alert('Funcionalidad de seguridad: Para desactivar el DNI digital debes comunicarte con el centro de ayuda.')">
+                    <i class="fa-solid fa-xmark"></i> Desactivar DNI
+                </button>
+            </div>
+        </div>
+        <div id="dni-detail-info" class="dni-detail-container" style="display: none;">
+    <div class="detail-group">
+        <label>Nombre</label>
+        <p>Matias Ezequiel</p>
+    </div>
+    <div class="detail-group">
+        <label>Apellido</label>
+        <p>Rios</p>
+    </div>
+    <div class="detail-group">
+        <label>DNI</label>
+        <p>33.782.781</p>
+    </div>
+    <div class="detail-group">
+        <label>Ejemplar</label>
+        <p>C</p>
+    </div>
+    <div class="detail-group">
+        <label>Nacimiento</label>
+        <p>25/08/1991</p>
+    </div>
+    <div class="detail-group">
+        <label>Vencimiento</label>
+        <p>07/10/2034</p>
+    </div>
+</div>
+    </main>
+
+    <nav class="footer-nav">
+        <a href="home.html" class="nav-item active"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+        <div class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Novedades</span></div>
+        <div class="nav-item"><i class="fa-solid fa-phone"></i><span>Teléfonos</span></div>
+        <div class="nav-item"><i class="fa-solid fa-face-smile"></i><span>Tina</span></div>
+    </nav>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        const swiper = new Swiper('.swiper-dni', {
+            pagination: { el: '.swiper-pagination', clickable: true },
+        });
+
+        // Fecha Actual
+        const dateEl = document.querySelector('.current-date');
+        const now = new Date();
+        dateEl.innerText = now.toLocaleDateString('es-AR') + " " + 
+                          now.getHours().toString().padStart(2, '0') + ":" + 
+                          now.getMinutes().toString().padStart(2, '0') + " hs.";
+    
+    function toggleDniDetail() {
+    const detailDiv = document.getElementById('dni-detail-info');
+    const isHidden = detailDiv.style.display === 'none';
+    
+    if (isHidden) {
+        detailDiv.style.display = 'block';
+        // Desplazar suavemente hacia abajo para ver la info
+        detailDiv.scrollIntoView({ behavior: 'smooth' });
+    } else {
+        detailDiv.style.display = 'none';
+    }
+}
+    </script>
+</body>
+</html>

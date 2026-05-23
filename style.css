@@ -1,0 +1,466 @@
+/*:root {
+    --brand-blue: #3233B8; // El azul profundo de la captura 
+    --bg-gray: #fcfcfc;
+    --text-black: #1a1a1a;
+    --border-radius: 14px;
+}
+*/
+
+:root {
+    --brand-blue: #3233B8;
+    --bg-gray: #fcfcfc;
+    --text-black: #1a1a1a;
+    --border-radius: 14px;
+    /* Forzamos que los controles del sistema (scrollbars, etc) sean claros */
+    color-scheme: light only; /*color-scheme: light; */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/*body {
+    background-color: var(--bg-gray);
+    padding-bottom: 80px;
+}*/
+body {
+    /*background-color: ;*/
+    /*color: ;*/ /* Asegura que el texto sea negro */
+    /*padding-bottom: 80px;*/
+
+    background-color: var(--bg-gray) !important;
+    color: var(--text-black) !important;
+    padding-bottom: 80px;
+    
+    /* Esta propiedad es experimental pero ayuda en navegadores basados en Chromium */
+    forced-color-adjust: none;
+}
+
+/* Header */
+.header-main {
+    background-color: var(--brand-blue);
+    padding: 15px 20px 40px;
+    color: white;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.menu-icon { font-size: 22px; }
+/*.app-logo { height: 28px; filter: brightness(0) invert(1); }*/
+.app-logo { height: 28px; }
+
+.profile-icon {
+    position: relative;
+    background: #8e8e8e;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check-badge {
+    position: absolute;
+    bottom: 0;
+    right: -2px;
+    background: white;
+    color: var(--brand-blue);
+    font-size: 8px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.greeting h1 {
+    font-size: 1rem;
+    text-align: center;
+    font-weight: 500;
+}
+
+/* Contenido */
+.content {
+    margin-top: -20px;
+    padding: 0 20px;
+}
+
+.info-card {
+    background: white;
+    border-radius: var(--border-radius);
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.card-main-icon {
+    font-size: 40px;
+    color: var(--brand-blue);
+}
+
+.card-text p { font-size: 0.95rem; margin-bottom: 10px; color: #444; }
+
+.btn-action {
+    background: var(--brand-blue);
+    color: white;
+    border: none;
+    padding: 8px 25px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.grid-title {
+    font-size: 1.1rem;
+    margin-bottom: 20px;
+    font-weight: 700;
+}
+
+/* Grilla */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-bottom: 30px;
+}
+
+.grid-card {
+    background: white;
+    aspect-ratio: 1/1;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid #f0f0f0;
+}
+
+.grid-card i { font-size: 1.4rem; color: var(--brand-blue); }
+.grid-card span { font-size: 0.7rem; color: #555; font-weight: 500; }
+
+/* Banner Perfil */
+.profile-banner {
+    background: #F2D1D1; /* Color rosado suave del banner */
+    border-radius: var(--border-radius);
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.profile-progress {
+    width: 60px;
+    height: 60px;
+    border: 3px solid #3AB6E3;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 25px;
+    color: #888;
+    background: white;
+}
+
+.banner-info h4 { font-size: 1rem; margin-bottom: 4px; }
+.banner-info p { font-size: 0.8rem; color: #555; }
+
+/* Nav Inferior */
+.footer-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0 15px;
+    border-top: 1px solid #eee;
+}
+
+.nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #777;
+    flex: 1;
+}
+
+.nav-item i { font-size: 1.3rem; margin-bottom: 4px; }
+.nav-item span { font-size: 0.75rem; }
+.nav-item.active { color: var(--brand-blue); }
+
+/* Desktop Viewport */
+@media (min-width: 600px) {
+    body { background: #eee; }
+    .header-main, .footer-nav, .content {
+        max-width: 450px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .footer-nav { left: 50%; transform: translateX(-50%); }
+}
+
+.header-internal {
+    background-color: var(--brand-blue);
+    color: white;
+    padding: 15px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-content h2 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    flex-grow: 1;
+    margin-left: 20px;
+}
+
+.back-btn {
+    color: white;
+    font-size: 1.2rem;
+    text-decoration: none;
+}
+
+.refresh-icon {
+    font-size: 1.2rem;
+}
+
+.content-internal {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.doc-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+.doc-icon-section {
+    padding-right: 15px;
+    border-right: 1px solid #eee;
+    color: var(--brand-blue);
+    font-size: 1.8rem;
+    min-width: 60px;
+    display: flex;
+    justify-content: center;
+}
+
+.doc-info {
+    padding-left: 15px;
+    flex-grow: 1;
+}
+
+.doc-info h3 {
+    font-size: 1rem;
+    color: #333;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.doc-arrow {
+    color: #999;
+    font-size: 0.9rem;
+}
+
+/* Ajuste para que el nav inferior no pise el contenido */
+.bg-light {
+    background-color: #f8f9fa;
+}
+
+/* Desktop Viewport para internas */
+@media (min-width: 600px) {
+    .header-internal {
+        max-width: 450px;
+        margin: 0 auto;
+    }
+}
+
+/* Acordeón y Detalles */
+.doc-details {
+    display: none; /* Oculto por defecto */
+    background: white;
+    margin-top: -10px;
+    padding: 20px;
+    border-radius: 0 0 12px 12px;
+    border: 1px solid #eee;
+    border-top: none;
+    margin-bottom: 15px;
+}
+
+.warning-box {
+    background-color: #f8f9fa;
+    padding: 15px;
+    font-size: 0.85rem;
+    color: #666;
+    border-radius: 8px;
+    line-height: 1.4;
+}
+
+.qr-container {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.qr-img {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 10px;
+}
+
+.update-text {
+    font-size: 0.8rem;
+    color: #888;
+}
+
+.data-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.data-grid label {
+    display: block;
+    font-size: 0.75rem;
+    color: #aaa;
+    margin-bottom: 2px;
+}
+
+.data-grid p {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #333;
+}
+
+.full-width { grid-column: span 2; }
+
+/* Estado Vigente (Verde) */
+.status-active {
+    color: #28a745 !important; /* Verde éxito */
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+/* Botón Azul Grande */
+.btn-blue-large {
+    width: 100%;
+    background-color: var(--brand-blue);
+    color: white;
+    border: none;
+    padding: 15px;
+    border-radius: 30px;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.data-source {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 0.85rem;
+}
+
+.data-source p { color: #888; margin-bottom: 3px; }
+.data-source strong { color: var(--brand-blue); }
+
+.info-footer {
+    display: flex;
+    gap: 10px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    font-size: 0.75rem;
+    color: #555;
+}
+
+.info-footer i { color: var(--brand-blue); font-size: 1.2rem; }
+.info-footer span { color: var(--brand-blue); font-weight: 600; }
+
+.doc-arrow i {
+    transition: transform 0.3s ease;
+}
+
+.swiper-pagination {
+    position: relative !important;
+    bottom: 0 !important;
+    margin-top: 10px;
+}
+
+/* Estilo para los botones del footer que no son links */
+.footer-nav .nav-item {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Forzar que el texto sea oscuro en la tarjeta */
+.dni-card-main p, .dni-card-main h3 {
+    color: #333 !important;
+}
+
+/**/
+.dni-detail-container {
+    background: white;
+    margin-top: 15px;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+
+.detail-group {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 8px;
+}
+
+.detail-group:last-child {
+    border-bottom: none;
+}
+
+.detail-group label {
+    display: block;
+    color: #888;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.detail-group p {
+    color: #333;
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}

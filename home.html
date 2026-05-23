@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <meta name="apple-mobile-web-app-capable" content="yes"> 
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="apple-touch-icon" href="192.png">
+        
+    <title>Mi Argentina</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#007bff">
+    <!--<style>
+        body { font-family: sans-serif; margin: 0; display: flex; flex-direction: column; height: 100vh; }
+        nav { background: #333; color: white; padding: 1rem; display: flex; justify-content: space-around; }
+        main { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+    </style>-->
+</head>
+<body>
+    <header class="header-main">
+        <div class="header-top">
+            <i class="fa-solid fa-bars menu-icon"></i>
+            <img src="logo.png" alt="miArgentina" class="app-logo"> <!--https://www.argentina.gob.ar/profiles/argentinagobar/themes/argentinagobar/logo.svg-->
+            <div class="profile-icon">
+                <i class="fa-solid fa-user"></i>
+                <div class="check-badge"><i class="fa-solid fa-check"></i></div>
+            </div>
+        </div>
+        <div class="greeting">
+            <h1>¡Hola, Matias Ezequiel!</h1>
+        </div>
+    </header>
+
+    <main class="content">
+        <section class="info-card">
+            <div class="card-icon-container">
+                <img src="ticket.png">
+               <!-- <i class="fa-solid fa-ticket card-main-icon"></i>-->
+            </div>
+            <div class="card-text">
+                <p>No tenés turnos programados.</p>
+                <button class="btn-action">Sacá turno</button>
+            </div>
+        </section>
+
+        <h2 class="grid-title">¿Qué necesitás hoy?</h2>
+
+        <div class="menu-grid">
+            <a href="documentos.html" style="text-decoration: none;">
+                <div class="grid-card">
+                    <i class="fa-solid fa-id-card-clip"></i>
+                    <span>Documentos</span>
+                </div>
+            </a>
+            <!--<div class="grid-card">
+                <i class="fa-solid fa-id-card-clip"></i>
+                <span>Documentos</span>
+            </div>-->
+            <div class="grid-card">
+                <i class="fa-solid fa-car"></i>
+                <span>Vehículos</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-briefcase"></i>
+                <span>Trabajo</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-heart"></i>
+                <span>Salud</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-dollar-sign"></i>
+                <span>Cobros</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-file-lines"></i>
+                <span>Trámites</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Turnos</span>
+            </div>
+            <div class="grid-card">
+                <i class="fa-solid fa-users"></i>
+                <span>Hijos</span>
+            </div>
+        </div>
+
+        <div class="profile-banner">
+            <div class="profile-progress">
+                <i class="fa-solid fa-user"></i>
+            </div>
+            <div class="banner-info">
+                <h4>Completá tu perfil</h4>
+                <p>Mantené todos tus datos actualizados</p>
+            </div>
+        </div>
+    </main>
+
+    <nav class="footer-nav">
+        <div class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Inicio</span>
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-newspaper"></i>
+            <span>Novedades</span>
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-phone"></i>
+            <span>Teléfonos</span>
+        </div>
+        <div class="nav-item">
+            <i class="fa-solid fa-face-smile"></i>
+            <span>Tina</span>
+        </div>
+    </nav>
+
+    <script type="module" src="./js/home.js"></script>
+</body>
+</html>

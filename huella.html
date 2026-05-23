@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mi Argentina - Desbloqueo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --brand-blue: #3233B8;
+            --text-dark: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #FFFFFF;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .content-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* Contenedor de la Imagen */
+        .illustration-container {
+            margin-bottom: 40px;
+        }
+
+        /* Ajuste de la nueva imagen huella.png */
+        .auth-image {
+            width: 160px; /* Tamaño ajustado según la estética de la app */
+            height: auto;
+            display: block;
+        }
+
+        .auth-text {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.3;
+            max-width: 280px;
+        }
+
+        /* Contenedor de Botones Inferior */
+        .button-container {
+            width: 100%;
+            padding: 40px 30px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            border: none;
+            outline: none;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--brand-blue);
+            color: white;
+        }
+
+        .btn-primary:active {
+            background-color: #262791;
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background-color: white;
+            color: var(--brand-blue);
+            border: 2px solid var(--brand-blue);
+        }
+
+        .btn-secondary:active {
+            background-color: #f0f0ff;
+            transform: scale(0.98);
+        }
+
+        .loading {
+            opacity: 0.7;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        <div class="illustration-container">
+            <img src="huella.png" alt="Desbloqueo Biométrico" class="auth-image">
+        </div>
+
+        <div class="auth-text">
+            Usá tu huella o Face ID para desbloquear la app
+        </div>
+    </div>
+
+    <div class="button-container">
+        <button id="btn-biometric" class="btn btn-primary" onclick="handleLogin()">
+            Usar huella o face ID
+        </button>
+        <button class="btn btn-secondary" onclick="window.location.href='login.html'">
+            Ingreso manual
+        </button>
+    </div>
+
+    <script>
+        function handleLogin() {
+            const btn = document.getElementById('btn-biometric');
+            
+            btn.classList.add('loading');
+            btn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Verificando...';
+
+            setTimeout(() => {
+                window.location.href = 'home.html';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

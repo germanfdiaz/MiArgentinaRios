@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="light">
+    <title>Documentos - Mi Argentina</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="theme-color" content="#3233B8">
+</head>
+<body class="bg-light">
+
+    <!--<header class="header-internal">
+        <div class="header-content">
+            <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+            <h2>Documentos</h2>
+            <i class="fa-solid fa-rotate-right refresh-icon" onclick="location.reload()"></i>
+        </div>
+    </header>-->
+
+    <header class="header-internal">
+    <div class="header-content">
+        <a href="home.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2>Documentos</h2>
+        <i class="fa-solid fa-rotate-right refresh-icon" onclick="location.reload()"></i>
+    </div>
+    </header>
+    <main class="content-internal">
+        
+        <!-- ACORDEÓN DNI -->
+        <div class="accordion-item">
+            <div class="doc-card" onclick="toggleAccordion('details-dni', this)">
+                <div class="doc-icon-section"><i class="fa-solid fa-address-card"></i></div>
+                <div class="doc-info"><h3>Documento Nacional de Identidad (DNI)</h3></div>
+                <div class="doc-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+            </div>
+            
+            <div id="details-dni" class="doc-details">
+                <div class="warning-box">
+                    Si te retuvieron el DNI físico, no podés circular con el DNI digital. Hacerlo constituye un delito.
+                </div>
+                <div class="qr-container">
+                    <img src="qr.png" alt="QR DNI" class="qr-img"> 
+                    <p class="update-text">Última actualización <span class="current-date"></span></p>
+                </div>
+                <div class="data-grid">
+                    <div><label>Estado</label><p class="status-active"><i class="fa-solid fa-circle-check"></i> Vigente</p></div>
+                    <div><label>Vencimiento</label><p>07/10/2034</p></div>
+                    <div><label>Nombre</label><p>Matias Ezequiel</p></div>
+                    <div><label>Apellido</label><p>Rios</p></div>
+                    <div class="full-width"><label>DNI</label><p>33.782.781</p></div>
+                </div>
+               <!-- <button class="btn-blue-large" onclick="window.location.href='identificacion.html'">Ver mi identificación</button>-->
+                <button class="btn-blue-large" onclick="redireccionarConDelay('identificacion.html', this)">
+    Ver mi identificación
+</button>
+                <div class="data-source">
+                    <p>Datos suministrados por</p>
+                    <strong>Registro Nacional de las Personas (RENAPER)</strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- ACORDEÓN LICENCIA -->
+        <div class="accordion-item">
+            <div class="doc-card" onclick="toggleAccordion('details-licencia', this)">
+                <div class="doc-icon-section"><i class="fa-solid fa-id-card"></i></div>
+                <div class="doc-info"><h3>Licencia Nacional de conducir</h3></div>
+                <div class="doc-arrow"><i class="fa-solid fa-chevron-down"></i></div>
+            </div>
+
+            <div id="details-licencia" class="doc-details">
+                <div class="warning-box">
+                    Si te retuvieron o inhabilitaron la licencia física, no podés circular con la licencia digital. Hacerlo constituye un delito.
+                </div>
+                <div class="qr-container">
+                    <img src="qr.png" alt="QR Licencia" class="qr-img">
+                    <p class="update-text">Última actualización <span class="current-date"></span></p>
+                </div>
+                <div class="data-grid">
+                    <div><label>Estado</label><p class="status-active"><i class="fa-solid fa-circle-check"></i> Vigente</p></div>
+                    <div><label>Vencimiento</label><p>30/04/2031</p></div>
+                    <div><label>Nombre</label><p>Matias Ezequiel</p></div>
+                    <div><label>Apellido</label><p>Rios</p></div>
+                    <div class="full-width"><label>DNI</label><p>33.782.781</p></div>
+                </div>
+                <!--<button class="btn-blue-large" onclick="window.location.href='licencia.html'">Ver mi licencia</button>-->
+                <button class="btn-blue-large" onclick="redireccionarConDelay('licencia.html', this)">
+                    Ver mi licencia
+                </button>
+                <div class="data-source">
+                    <p>Datos suministrados por</p>
+                    <strong>Agencia Nacional de Seguridad Vial</strong>
+                </div>
+                <div class="info-footer">
+                    <i class="fa-solid fa-circle-info"></i>
+                    <p>Si los datos o tu vigencia está desactualizada <span>solicitá la rectificación</span> en la Agencia Nacional de Seguridad Vial.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <nav class="footer-nav">
+    <a href="home.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
+    <div class="nav-item"><i class="fa-solid fa-newspaper"></i><span>Novedades</span></div>
+    <div class="nav-item"><i class="fa-solid fa-phone"></i><span>Teléfonos</span></div>
+    <div class="nav-item"><i class="fa-solid fa-face-smile"></i><span>Tina</span></div>
+</nav>
+
+   <script>
+        // Función para abrir/cerrar los detalles (se mantiene igual)
+        function toggleAccordion(id, el) {
+    const detail = document.getElementById(id);
+    const arrow = el.querySelector('.fa-chevron-down');
+    const isOpen = detail.style.display === 'block';
+    
+    // Si ya está abierto, lo cerramos inmediatamente
+    if (isOpen) {
+        detail.style.display = 'none';
+        arrow.style.transform = 'rotate(0deg)';
+        return;
+    }
+
+    // Si está cerrado, aplicamos el delay de 1 segundo (1000ms)
+    // Podés agregar un estilo de cursor "wait" para dar feedback al usuario
+    document.body.style.cursor = 'wait';
+
+    setTimeout(() => {
+        // Primero cerramos cualquier otro acordeón abierto
+        document.querySelectorAll('.doc-details').forEach(d => d.style.display = 'none');
+        document.querySelectorAll('.fa-chevron-down').forEach(a => a.style.transform = 'rotate(0deg)');
+
+        // Abrimos el actual
+        detail.style.display = 'block';
+        arrow.style.transform = 'rotate(180deg)';
+        
+        // Restauramos el cursor
+        document.body.style.cursor = 'default';
+        
+        // Scroll suave hacia el elemento abierto para mejorar la UX
+        detail.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 1000); 
+}
+
+        // Lógica para la fecha (Actualizada para mostrar HOY)
+        const dateElements = document.querySelectorAll('.current-date');
+        const today = new Date(); // Eliminamos la línea que restaba 15 días
+
+        const formattedDate = today.toLocaleDateString('es-AR') + " " + 
+                            today.getHours().toString().padStart(2, '0') + ":" + 
+                            today.getMinutes().toString().padStart(2, '0') + " hs.";
+        
+        dateElements.forEach(el => el.innerText = formattedDate);
+
+        function redireccionarConDelay(url, boton) {
+    // Guardamos el texto original del botón
+    const textoOriginal = boton.innerHTML;
+    
+    // Cambiamos el estilo para dar feedback de carga
+    boton.disabled = true;
+    boton.style.opacity = "0.7";
+    boton.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> Cargando...';
+    document.body.style.cursor = 'wait';
+
+    // Ejecutamos el delay de 1.5 segundos
+    setTimeout(() => {
+        document.body.style.cursor = 'default';
+        window.location.href = url;
+    }, 1500);
+}
+    </script>
+</body>
+</html>
