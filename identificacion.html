@@ -8,8 +8,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <style>
-        body { background-color: #f8f9fa; margin: 0; padding-bottom: 80px; }
+        :root {
+            --brand-blue: #2e3aa2; /* Color azul de la app original */
+            --text-gray: #666666;
+            --light-gray: #f4f6f9;
+            --border-color: #eeeeee;
+        }
+
+        body { 
+            background-color: #f8f9fa; 
+            margin: 0; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            padding-bottom: 80px; 
+            overflow-x: hidden;
+        }
         
+        /* Header Fijo */
         .header-dni-digital {
             background-color: var(--brand-blue);
             color: white;
@@ -17,18 +31,31 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
         .header-dni-digital h2 { font-size: 1.1rem; font-weight: 500; margin: 0; flex-grow: 1; margin-left: 20px; }
         .header-dni-digital a { color: white; text-decoration: none; font-size: 1.2rem; }
+        .header-dni-digital i { cursor: pointer; }
 
-        .dni-container { padding: 20px; }
+        /* Contenedor Swiper Principal de Pantallas (Desplazamiento lateral) */
+        .main-swiper {
+            width: 100%;
+            height: auto;
+        }
 
-        /* Tarjeta Blanca Principal */
+        .dni-container { 
+            padding: 20px; 
+            box-sizing: border-box;
+        }
+
+        /* --- PANTALLA 1: TARJETA PRINCIPAL --- */
         .dni-card-main {
             background: white;
             border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
             overflow: hidden;
             display: flex;
             flex-direction: column;
@@ -40,33 +67,51 @@
             text-align: left;
             font-size: 1.2rem;
             font-weight: 700;
-            color: #333;
-            margin-bottom: 20px;
+            color: #222;
+            margin: 0 0 20px 0;
         }
 
-        /* Swiper / Imagen DNI */
+        /* Swiper interno del DNI (Frente / Dorso) */
         .swiper-dni { width: 100%; margin-bottom: 15px; }
         .swiper-dni img {
             width: 100%;
-            border-radius: 8px;
-            border: 1px solid #eee;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+            display: block;
+        }
+
+        /* Indicadores de paginación circulares */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #b0b0b0;
+        }
+        .dot.active {
+            background-color: var(--brand-blue);
         }
 
         .update-info {
-            color: #666;
+            color: var(--text-gray);
             font-size: 0.85rem;
-            margin-top: 10px;
+            margin: 15px 0 5px 0;
         }
 
-        /* Botonera de la tarjeta */
+        /* Acciones: Ver detalle / Desactivar */
         .dni-card-actions {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            border-top: 1px solid #eee;
+            border-top: 1px solid var(--border-color);
         }
 
         .btn-card {
-            padding: 15px;
+            padding: 16px;
             background: none;
             border: none;
             display: flex;
@@ -76,14 +121,176 @@
             font-size: 0.95rem;
             color: #333;
             font-weight: 500;
+            cursor: pointer;
         }
 
-        .btn-card:first-child { border-right: 1px solid #eee; }
+        .btn-card:first-child { border-right: 1px solid var(--border-color); }
         .btn-card i { font-size: 1.2rem; color: var(--brand-blue); }
         .btn-card i.fa-xmark { color: #555; }
 
-        /* Paginación Swiper Personalizada */
-        .swiper-pagination-bullet-active { background: var(--brand-blue) !important; }
+        /* Botón Desplegable QR */
+        .btn-qr-dropdown {
+            width: 100%;
+            padding: 16px 20px;
+            background: white;
+            border: none;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.95rem;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+            box-sizing: border-box;
+        }
+        .btn-qr-dropdown .left-side {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .btn-qr-dropdown i.fa-qrcode {
+            font-size: 1.3rem;
+            color: var(--brand-blue);
+        }
+        .btn-qr-dropdown .arrow-icon {
+            color: #666;
+            transition: transform 0.3s ease;
+        }
+        .btn-qr-dropdown.open .arrow-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Contenedor del QR colapsable */
+        .qr-collapse-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            background: white;
+            text-align: center;
+        }
+        .qr-collapse-content.show {
+            max-height: 350px; /* Espacio suficiente para el QR */
+        }
+        .qr-container-wrapper {
+            padding: 10px 20px 30px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .qr-container-wrapper img {
+            width: 240px;
+            height: 240px;
+            object-fit: contain;
+        }
+
+
+        /* --- PANTALLA 2: DETALLE COMPLETO (Slide Derecho) --- */
+        .dni-detail-slide {
+            background: white;
+            min-height: calc(100vh - 140px);
+            padding: 30px 24px;
+            box-sizing: border-box;
+        }
+
+        .detail-profile-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        /* Rediseño compacto del contenedor de la foto de perfil */
+        .crop-cara-container {
+            width: 85px;
+            height: 85px;
+            border-radius: 50%;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #ddd;
+            margin-bottom: 18px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .crop-cara-container img {
+            position: absolute;
+            width: 390%; 
+            top: -80%;
+            left: -18%;
+        }
+
+        /* Código de barras achicado con proporciones de app nativa */
+        .detail-barcode {
+            width: 170px;
+            height: auto;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Grid de información del Detalle */
+        .detail-info-grid {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .detail-group {
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            border-bottom: 1px solid #f1f1f1;
+            padding-bottom: 8px;
+        }
+
+        .detail-group label {
+            font-size: 0.85rem;
+            color: #888888;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+
+        .detail-group p {
+            font-size: 1.05rem;
+            color: #111111;
+            font-weight: 600;
+            margin: 0;
+        }
+
+
+        /* Bottom Navigation Bar Fija */
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 100;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: #757575;
+            font-size: 0.75rem;
+            text-decoration: none;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .nav-item i {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+        }
+
+        .nav-item.active {
+            color: var(--brand-blue);
+        }
     </style>
 </head>
 <body>
@@ -94,62 +301,116 @@
         <i class="fa-solid fa-rotate-right" onclick="location.reload()"></i>
     </header>
 
-    <main class="dni-container">
-        <div class="dni-card-main">
-            <div class="dni-card-content">
-                <h3 class="user-full-name">Matias Ezequiel Rios</h3>
-                
-                <div class="swiper swiper-dni">
-                    <div class="swiper-wrapper">
-                        <div class="swiper-slide">
-                            <img src="DNI_frente.png" alt="DNI Frente">
+    <div class="swiper main-swiper">
+        <div class="swiper-wrapper">
+            
+            <div class="swiper-slide dni-container">
+                <div class="dni-card-main">
+                    <div class="dni-card-content">
+                        <h3 class="user-full-name">German Fernando Diaz</h3>
+                        
+                        <div class="swiper swiper-dni">
+                            <div class="swiper-wrapper">
+                                <div class="swiper-slide">
+                                    <img src="DNI_frente.png" alt="DNI Frente">
+                                </div>
+                                <div class="swiper-slide">
+                                    <img src="DNI_dorso.png" alt="DNI Dorso">
+                                </div>
+                            </div>
                         </div>
-                        <div class="swiper-slide">
-                            <img src="DNI_dorso.png" alt="DNI Dorso">
+
+                        <div class="dots-container">
+                            <div class="dot active"></div>
+                            <div class="dot"></div>
+                        </div>
+
+                        <p class="update-info">Última actualización <span class="current-date"></span></p>
+                    </div>
+
+                    <div class="dni-card-actions">
+                        <button class="btn-card" onclick="goToDetailSlide()">
+                            <i class="fa-solid fa-eye"></i> Ver detalle
+                        </button>
+                        <button class="btn-card" onclick="alert('Funcionalidad de seguridad: Para desactivar el DNI digital debes comunicarte con el centro de ayuda.')">
+                            <i class="fa-solid fa-xmark"></i> Desactivar DNI
+                        </button>
+                    </div>
+
+                    <button class="btn-qr-dropdown" id="btn-qr" onclick="toggleQrDropdown()">
+                        <span class="left-side">
+                            <i class="fa-solid fa-qrcode"></i> Verifica código QR
+                        </span>
+                        <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                    </button>
+
+                    <div class="qr-collapse-content" id="qr-collapse">
+                        <div class="qr-container-wrapper">
+                            <img src="qr.png" alt="Código QR de Validación">
                         </div>
                     </div>
-                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+            
+            <div class="swiper-slide dni-detail-slide">
+                <div class="detail-profile-header">
+                    <div class="crop-cara-container">
+                        <img src="DNI_frente.png" alt="Cara extraída">
+                    </div>
+                    
+                    <img src="barras.png" alt="Código de barras" class="detail-barcode">
                 </div>
 
-                <p class="update-info">Última actualización <span class="current-date"></span></p>
+                <div class="detail-info-grid">
+                    <div class="detail-group">
+                        <label>DNI</label>
+                        <p>33.782.781</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Número de trámite</label>
+                        <p>649472247</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Fecha de emisión</label>
+                        <p>07/10/2019</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Fecha de vencimiento</label>
+                        <p>07/10/2034</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Nombre</label>
+                        <p>Matias Ezequiel</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Apellido</label>
+                        <p>RIOS</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Sexo</label>
+                        <p>M</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Fecha de nacimiento</label>
+                        <p>25/08/1991</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Nacionalidad</label>
+                        <p>AR</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Lugar de nacimiento</label>
+                        <p>ARGENTINA</p>
+                    </div>
+                    <div class="detail-group">
+                        <label>Domicilio</label>
+                        <p>TALCAHUANO 994, MONTE GRANDE, 1242</p>
+                    </div>
+                </div>
             </div>
 
-            <div class="dni-card-actions">
-                <button class="btn-card" onclick="toggleDniDetail()">
-                    <i class="fa-solid fa-eye"></i> Ver detalle
-                </button>
-                <button class="btn-card" onclick="alert('Funcionalidad de seguridad: Para desactivar el DNI digital debes comunicarte con el centro de ayuda.')">
-                    <i class="fa-solid fa-xmark"></i> Desactivar DNI
-                </button>
-            </div>
         </div>
-        <div id="dni-detail-info" class="dni-detail-container" style="display: none;">
-    <div class="detail-group">
-        <label>Nombre</label>
-        <p>Matias Ezequiel</p>
     </div>
-    <div class="detail-group">
-        <label>Apellido</label>
-        <p>Rios</p>
-    </div>
-    <div class="detail-group">
-        <label>DNI</label>
-        <p>33.782.781</p>
-    </div>
-    <div class="detail-group">
-        <label>Ejemplar</label>
-        <p>C</p>
-    </div>
-    <div class="detail-group">
-        <label>Nacimiento</label>
-        <p>25/08/1991</p>
-    </div>
-    <div class="detail-group">
-        <label>Vencimiento</label>
-        <p>07/10/2034</p>
-    </div>
-</div>
-    </main>
 
     <nav class="footer-nav">
         <a href="home.html" class="nav-item active"><i class="fa-solid fa-house"></i><span>Inicio</span></a>
@@ -160,29 +421,51 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
-        const swiper = new Swiper('.swiper-dni', {
-            pagination: { el: '.swiper-pagination', clickable: true },
+        const mainSwiper = new Swiper('.main-swiper', {
+            slidesPerView: 1,
+            spaceBetween: 0,
+            allowTouchMove: true 
         });
 
-        // Fecha Actual
+        const cardSwiper = new Swiper('.swiper-dni', {
+            slidesPerView: 1,
+            spaceBetween: 10,
+            on: {
+                slideChange: function () {
+                    const dots = document.querySelectorAll('.dot');
+                    dots.forEach((dot, index) => {
+                        if (index === this.activeIndex) {
+                            dot.classList.add('active');
+                        } else {
+                            dot.classList.remove('active');
+                        }
+                    });
+                }
+            }
+        });
+
         const dateEl = document.querySelector('.current-date');
         const now = new Date();
         dateEl.innerText = now.toLocaleDateString('es-AR') + " " + 
                           now.getHours().toString().padStart(2, '0') + ":" + 
                           now.getMinutes().toString().padStart(2, '0') + " hs.";
-    
-    function toggleDniDetail() {
-    const detailDiv = document.getElementById('dni-detail-info');
-    const isHidden = detailDiv.style.display === 'none';
-    
-    if (isHidden) {
-        detailDiv.style.display = 'block';
-        // Desplazar suavemente hacia abajo para ver la info
-        detailDiv.scrollIntoView({ behavior: 'smooth' });
-    } else {
-        detailDiv.style.display = 'none';
-    }
-}
+
+        function toggleQrDropdown() {
+            const dropdownBtn = document.getElementById('btn-qr');
+            const qrCollapse = document.getElementById('qr-collapse');
+            
+            if (qrCollapse.classList.contains('show')) {
+                qrCollapse.classList.remove('show');
+                dropdownBtn.classList.remove('open');
+            } else {
+                qrCollapse.classList.add('show');
+                dropdownBtn.classList.add('open');
+            }
+        }
+
+        function goToDetailSlide() {
+            mainSwiper.slideNext();
+        }
     </script>
 </body>
 </html>
