@@ -23,7 +23,7 @@
             overflow-x: hidden;
         }
         
-        /* Header Fijo */
+        /* Header Fijo Dinámico */
         .header-dni-digital {
             background-color: var(--brand-blue);
             color: white;
@@ -37,7 +37,7 @@
         }
 
         .header-dni-digital h2 { font-size: 1.1rem; font-weight: 500; margin: 0; flex-grow: 1; margin-left: 20px; }
-        .header-dni-digital a { color: white; text-decoration: none; font-size: 1.2rem; }
+        .header-dni-digital a { color: white; text-decoration: none; font-size: 1.2rem; cursor: pointer; }
         .header-dni-digital i { cursor: pointer; }
 
         /* Contenedor Swiper Principal de Pantallas (Desplazamiento lateral) */
@@ -71,8 +71,18 @@
             margin: 0 0 20px 0;
         }
 
-        /* Swiper interno del DNI (Frente / Dorso) */
-        .swiper-dni { width: 100%; margin-bottom: 15px; }
+        /* Swiper interno del DNI (Frente / Dorso) con Perspectiva 3D */
+        .swiper-dni { 
+            width: 100%; 
+            margin-bottom: 15px; 
+            perspective: 1200px; 
+        }
+        
+        .swiper-dni .swiper-slide {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
         .swiper-dni img {
             width: 100%;
             border-radius: 12px;
@@ -170,7 +180,7 @@
             text-align: center;
         }
         .qr-collapse-content.show {
-            max-height: 350px; /* Espacio suficiente para el QR */
+            max-height: 350px; 
         }
         .qr-container-wrapper {
             padding: 10px 20px 30px 20px;
@@ -185,7 +195,7 @@
         }
 
 
-        /* --- PANTALLA 2: DETALLE COMPLETO (Slide Derecho) --- */
+        /* --- PANTALLA 2: DETALLE COMPLETO (Integrado en el Swiper) --- */
         .dni-detail-slide {
             background: white;
             min-height: calc(100vh - 140px);
@@ -200,7 +210,7 @@
             margin-bottom: 25px;
         }
 
-        /* Rediseño compacto del contenedor de la foto de perfil */
+        /* Contenedor de la foto de perfil */
         .crop-cara-container {
             width: 85px;
             height: 85px;
@@ -218,7 +228,7 @@
             left: -18%;
         }
 
-        /* Código de barras achicado con proporciones de app nativa */
+        /* Código de barras */
         .detail-barcode {
             width: 170px;
             height: auto;
@@ -226,7 +236,7 @@
             display: block;
         }
 
-        /* Grid de información del Detalle */
+        /* Grid de información */
         .detail-info-grid {
             margin-top: 15px;
             display: flex;
@@ -296,9 +306,9 @@
 <body>
 
     <header class="header-dni-digital">
-        <a href="documentos.html"><i class="fa-solid fa-arrow-left"></i></a>
-        <h2>DNI Digital</h2>
-        <i class="fa-solid fa-rotate-right" onclick="location.reload()"></i>
+        <a id="btn-header-back" onclick="handleHeaderBack()"><i class="fa-solid fa-arrow-left"></i></a>
+        <h2 id="text-header-title">DNI Digital</h2>
+        <i id="btn-header-refresh" class="fa-solid fa-rotate-right" onclick="location.reload()"></i>
     </header>
 
     <div class="swiper main-swiper">
@@ -307,9 +317,9 @@
             <div class="swiper-slide dni-container">
                 <div class="dni-card-main">
                     <div class="dni-card-content">
-                        <h3 class="user-full-name">German Fernando Diaz</h3>
+                        <h3 class="user-full-name">Matias Ezequiel Rios</h3>
                         
-                        <div class="swiper swiper-dni">
+                        <div class="swiper swiper-dni swiper-flip">
                             <div class="swiper-wrapper">
                                 <div class="swiper-slide">
                                     <img src="DNI_frente.png" alt="DNI Frente">
@@ -329,7 +339,7 @@
                     </div>
 
                     <div class="dni-card-actions">
-                        <button class="btn-card" onclick="goToDetailSlide()">
+                        <button class="btn-card" onclick="mainSwiper.slideNext()">
                             <i class="fa-solid fa-eye"></i> Ver detalle
                         </button>
                         <button class="btn-card" onclick="alert('Funcionalidad de seguridad: Para desactivar el DNI digital debes comunicarte con el centro de ayuda.')">
@@ -352,59 +362,60 @@
                 </div>
             </div>
             
-            <div class="swiper-slide dni-detail-slide">
-                <div class="detail-profile-header">
-                    <div class="crop-cara-container">
-                        <img src="DNI_frente.png" alt="Cara extraída">
+            <div class="swiper-slide">
+                <div class="dni-detail-slide">
+                    <div class="detail-profile-header">
+                        <div class="crop-cara-container">
+                            <img src="DNI_frente.png" alt="Cara extraída">
+                        </div>
+                        <img src="barras.png" alt="Código de barras" class="detail-barcode">
                     </div>
-                    
-                    <img src="barras.png" alt="Código de barras" class="detail-barcode">
-                </div>
 
-                <div class="detail-info-grid">
-                    <div class="detail-group">
-                        <label>DNI</label>
-                        <p>33.782.781</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Número de trámite</label>
-                        <p>649472247</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Fecha de emisión</label>
-                        <p>07/10/2019</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Fecha de vencimiento</label>
-                        <p>07/10/2034</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Nombre</label>
-                        <p>Matias Ezequiel</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Apellido</label>
-                        <p>RIOS</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Sexo</label>
-                        <p>M</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Fecha de nacimiento</label>
-                        <p>25/08/1991</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Nacionalidad</label>
-                        <p>AR</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Lugar de nacimiento</label>
-                        <p>ARGENTINA</p>
-                    </div>
-                    <div class="detail-group">
-                        <label>Domicilio</label>
-                        <p>TALCAHUANO 994, MONTE GRANDE, 1242</p>
+                    <div class="detail-info-grid">
+                        <div class="detail-group">
+                            <label>DNI</label>
+                            <p>33.782.781</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Número de trámite</label>
+                            <p>532145978</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Fecha de emisión</label>
+                            <p>07/10/2019</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Fecha de vencimiento</label>
+                            <p>07/10/2034</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Nombre</label>
+                            <p>Matias Ezequiel</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Apellido</label>
+                            <p>RIOS</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Sexo</label>
+                            <p>M</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Fecha de nacimiento</label>
+                            <p>25/08/1991</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Nacionalidad</label>
+                            <p>AR</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Lugar de nacimiento</label>
+                            <p>ARGENTINA</p>
+                        </div>
+                        <div class="detail-group">
+                            <label>Domicilio</label>
+                            <p>TALCAHUANO 994, MONTE GRANDE</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -421,15 +432,39 @@
 
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script>
+        // Elementos del Header para cambios dinámicos
+        const textHeaderTitle = document.getElementById('text-header-title');
+        const btnHeaderRefresh = document.getElementById('btn-header-refresh');
+
         const mainSwiper = new Swiper('.main-swiper', {
             slidesPerView: 1,
             spaceBetween: 0,
-            allowTouchMove: true 
+            allowTouchMove: true,
+            on: {
+                slideChange: function () {
+                    // Si el slide activo es el 1 (Detalle), emula el header del detalle
+                    if (this.activeIndex === 1) {
+                        textHeaderTitle.innerText = "Datos del DNI";
+                        btnHeaderRefresh.style.display = "none";
+                    } else {
+                        // Si vuelve al slide 0 (Tarjeta), restaura el header del DNI
+                        textHeaderTitle.innerText = "DNI Digital";
+                        btnHeaderRefresh.style.display = "block";
+                    }
+                }
+            }
         });
 
         const cardSwiper = new Swiper('.swiper-dni', {
+            effect: 'flip',
+            nested: true, 
+            grabCursor: true,
             slidesPerView: 1,
-            spaceBetween: 10,
+            spaceBetween: 0,
+            flipEffect: {
+                slideShadows: true,
+                limitRotation: true
+            },
             on: {
                 slideChange: function () {
                     const dots = document.querySelectorAll('.dot');
@@ -444,6 +479,16 @@
             }
         });
 
+        // Acción de la flecha del header dependiendo de dónde esté parado el Swiper
+        function handleHeaderBack() {
+            if (mainSwiper.activeIndex === 1) {
+                mainSwiper.slidePrev(); // Vuelve con efecto inverso deslizando a la izquierda
+            } else {
+                window.location.href = "documentos.html"; // Comportamiento original si está en la tarjeta
+            }
+        }
+
+        // Estampa de tiempo local
         const dateEl = document.querySelector('.current-date');
         const now = new Date();
         dateEl.innerText = now.toLocaleDateString('es-AR') + " " + 
@@ -461,10 +506,6 @@
                 qrCollapse.classList.add('show');
                 dropdownBtn.classList.add('open');
             }
-        }
-
-        function goToDetailSlide() {
-            mainSwiper.slideNext();
         }
     </script>
 </body>
